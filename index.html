@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Miscela 2T</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#16282b">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#e6ece4;--card:#f6f9f3;--ink:#16282b;--muted:#586a6c;--line:#c6d2c6;--chip:#dae4d7;--res:#16282b;--res-ink:#eef0e4;--oil:#f2b705;--on-oil:#16282b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1b1d;--card:#182a2d;--ink:#e8eee6;--muted:#9bb0b0;--line:#2b4144;--chip:#223a3d;--res:#f2b705;--res-ink:#16282b;--oil:#16282b;--on-oil:#f2b705}}
+:root[data-theme="dark"]{--bg:#0f1b1d;--card:#182a2d;--ink:#e8eee6;--muted:#9bb0b0;--line:#2b4144;--chip:#223a3d;--res:#f2b705;--res-ink:#16282b;--oil:#16282b;--on-oil:#f2b705}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:500 17px/1.4 Barlow,system-ui,sans-serif}
+main{max-width:480px;margin:0 auto;padding:20px 16px 32px}
+h1{font:700 30px/1 "Barlow Condensed",Impact,sans-serif;letter-spacing:.01em;margin:4px 0 16px}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--chip);border-radius:12px;padding:4px;gap:4px;margin-bottom:14px}
+.seg button{border:0;background:transparent;color:var(--muted);font:600 16px Barlow,sans-serif;padding:12px 8px;border-radius:9px;min-height:48px}
+.seg button[aria-pressed=true]{background:var(--card);color:var(--ink);box-shadow:0 1px 0 var(--line)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+label{display:block;color:var(--muted);font-size:15px;margin-bottom:6px}
+.field{display:flex;align-items:baseline;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:4px}
+.field input{flex:1;min-width:0;border:0;background:transparent;color:var(--ink);font:700 44px/1.1 "Barlow Condensed",Impact,sans-serif;outline:0;padding:0}
+.field span{color:var(--muted);font-size:18px}
+.field:focus-within{border-color:var(--oil);border-bottom-color:#c99700}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chips button{border:1px solid var(--line);background:var(--chip);color:var(--ink);font:600 16px Barlow,sans-serif;border-radius:10px;padding:10px 14px;min-height:44px}
+.chips button[aria-pressed=true]{background:var(--ink);color:var(--card);border-color:var(--ink)}
+.custom{display:flex;align-items:center;gap:10px;margin-top:12px;color:var(--muted);font-size:15px}
+.custom input{width:90px;border:1px solid var(--line);background:var(--card);color:var(--ink);font:600 18px Barlow,sans-serif;padding:10px;border-radius:10px}
+.res{background:var(--res);color:var(--res-ink);border-radius:14px;padding:18px 18px 16px;margin-bottom:14px}
+.res .big{font:700 76px/0.95 "Barlow Condensed",Impact,sans-serif;word-break:break-all}
+.res .unit{font:600 22px Barlow,sans-serif;margin-top:2px}
+.res .sub{margin-top:10px;font-size:15px;opacity:.85}
+table{width:100%;border-collapse:collapse;font-size:16px}
+caption{text-align:left;color:var(--muted);font-size:15px;padding-bottom:6px}
+td,th{padding:9px 0;border-top:1px solid var(--line);text-align:left;font-weight:500}
+td:last-child,th:last-child{text-align:right;font-weight:700}
+.note{color:var(--muted);font-size:14px}
+button:focus-visible,input:focus-visible{outline:3px solid #c99700;outline-offset:2px}
+</style>
+</head>
+<body>
+<main>
+<h1>Miscela 2T</h1>
+
+<div class="seg" role="group" aria-label="Cosa conosci">
+<button id="m-fuel" aria-pressed="true">Ho la benzina</button>
+<button id="m-oil" aria-pressed="false">Ho l'olio</button>
+</div>
+
+<div class="card">
+<label id="qlabel" for="q">Benzina</label>
+<div class="field"><input id="q" type="text" inputmode="decimal" autocomplete="off" value="5"><span id="qunit">litri</span></div>
+</div>
+
+<div class="card">
+<label>Percentuale di olio</label>
+<div class="chips" id="chips"></div>
+<div class="custom"><label for="pct" style="margin:0">Altra percentuale</label><input id="pct" type="text" inputmode="decimal" value="2"><span>%</span></div>
+</div>
+
+<div class="res" aria-live="polite">
+<div class="big" id="big">—</div>
+<div class="unit" id="unit"></div>
+<div class="sub" id="sub"></div>
+</div>
+
+<div class="card">
+<table>
+<caption id="tcap">Quantità comuni</caption>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+<p class="note">Il rapporto è calcolato come 100 ÷ percentuale: 2% corrisponde a 1:50, 4% a 1:25. Controlla sempre la percentuale indicata dal costruttore del motore.</p>
+</main>
+
+<script>
+(function(){
+var $=function(id){return document.getElementById(id)};
+var s={mode:'fuel',fuel:5,oil:100,pct:2};
+try{var r=JSON.parse(localStorage.getItem('miscela2t')||'null');if(r&&typeof r==='object')for(var k in s)if(typeof r[k]===typeof s[k])s[k]=r[k]}catch(e){}
+var PRESETS=[1,2,2.5,3,4];
+function fmt(n,d){return n.toLocaleString('it-IT',{maximumFractionDigits:d})}
+function num(v){var n=parseFloat(String(v).replace(',','.'));return isFinite(n)&&n>0?n:0}
+function save(){try{localStorage.setItem('miscela2t',JSON.stringify(s))}catch(e){}}
+
+function buildChips(){
+ $('chips').innerHTML=PRESETS.map(function(p){return '<button data-p="'+p+'">'+fmt(p,1)+'%</button>'}).join('');
+ $('chips').onclick=function(e){var b=e.target.closest('button');if(!b)return;s.pct=parseFloat(b.dataset.p);$('pct').value=fmt(s.pct,2);render()};
+}
+function setMode(m){
+ s.mode=m;
+ $('m-fuel').setAttribute('aria-pressed',m==='fuel');
+ $('m-oil').setAttribute('aria-pressed',m==='oil');
+ $('qlabel').textContent=m==='fuel'?'Benzina':'Olio';
+ $('qunit').textContent=m==='fuel'?'litri':'ml';
+ $('q').value=fmt(m==='fuel'?s.fuel:s.oil,2);
+ render();
+}
+function render(){
+ var p=s.pct/100,q=s.mode==='fuel'?s.fuel:s.oil;
+ Array.prototype.forEach.call($('chips').children,function(b){b.setAttribute('aria-pressed',parseFloat(b.dataset.p)===s.pct)});
+ if(!p||!q){$('big').textContent='—';$('unit').textContent='';$('sub').textContent='Inserisci quantità e percentuale.'}
+ else if(s.mode==='fuel'){
+  var oil=q*1000*p;
+  $('big').textContent=fmt(oil,oil<10?1:0);
+  $('unit').textContent='ml di olio';
+  $('sub').textContent='da aggiungere a '+fmt(q,2)+' L di benzina. Rapporto 1:'+fmt(100/s.pct,1)+'.';
+ } else {
+  var f=q/(1000*p);
+  $('big').textContent=fmt(f,2);
+  $('unit').textContent='litri di benzina';
+  $('sub').textContent='per '+fmt(q,1)+' ml di olio. Rapporto 1:'+fmt(100/s.pct,1)+'.';
+ }
+ var rows=[1,2,5,10,20];
+ $('tcap').textContent='Olio da aggiungere al '+fmt(s.pct,2)+'%';
+ $('tbody').innerHTML=s.pct>0?rows.map(function(l){var o=l*1000*s.pct/100;return '<tr><td>'+l+' L di benzina</td><td>'+fmt(o,o<10?1:0)+' ml</td></tr>'}).join(''):'';
+ save();
+}
+$('m-fuel').onclick=function(){setMode('fuel')};
+$('m-oil').onclick=function(){setMode('oil')};
+$('q').oninput=function(){var n=num(this.value);if(s.mode==='fuel')s.fuel=n;else s.oil=n;render()};
+$('pct').oninput=function(){s.pct=num(this.value);render()};
+$('q').onfocus=$('pct').onfocus=function(){this.select()};
+buildChips();$('pct').value=fmt(s.pct,2);setMode(s.mode);
+})();
+if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){})})}
+</script>
+</body>
+</html>
